@@ -87,7 +87,7 @@ Docker-compose файл объединяет 4 контейнера:
 
 ### Развернул сервис на своей виртуалке
 
-Swagger docs: https://ml.saharov.net:81/docs
+Swagger docs: http://212.34.143.67:81/docs
 
 Скриншоты того как делаю запросы на него из Postman:
 
