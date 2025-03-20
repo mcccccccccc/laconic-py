@@ -1,0 +1,531 @@
+{
+	"info": {
+		"_postman_id": "9f7db6bc-222f-4dc6-8db7-deaa45aa51e1",
+		"name": "laconic_py",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7189986",
+		"_collection_link": "https://windy-backend.postman.co/workspace/windy-backend-Workspace~300acd55-32ca-4241-8f76-0a49dc8f4655/collection/7189986-9f7db6bc-222f-4dc6-8db7-deaa45aa51e1?action=share&source=collection_link&creator=7189986"
+	},
+	"item": [
+		{
+			"name": "127.0.0.1:81/health",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:81/health",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:81/links/h",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:81/shorts/h",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"shorts",
+						"h"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/admin/links/expired",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmODYzYTc0ZC1jZjg3LTQ5OTEtYmQyNi1hOTA4MzdhM2FmNzkiLCJhdWQiOlsiZmFzdGFwaS11c2VyczphdXRoIl0sImV4cCI6MTc0MjQxNjgyNX0.I5eQKKvL8jyu970NDjAJBmx1QhoqxasRL0yB7QHCygU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:81/admin/links/expired",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"admin",
+						"links",
+						"expired"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/admin/links/search",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmODYzYTc0ZC1jZjg3LTQ5OTEtYmQyNi1hOTA4MzdhM2FmNzkiLCJhdWQiOlsiZmFzdGFwaS11c2VyczphdXRoIl0sImV4cCI6MTc0MjQ1NzA2MH0.FrSCoiJeTxWh9D6WH6LTjntg0g7a6PwbjHjQkdn_Pt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:81/admin/links/search?original_url=y",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"admin",
+						"links",
+						"search"
+					],
+					"query": [
+						{
+							"key": "original_url",
+							"value": "y"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/links/del_unauth_links",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmODYzYTc0ZC1jZjg3LTQ5OTEtYmQyNi1hOTA4MzdhM2FmNzkiLCJhdWQiOlsiZmFzdGFwaS11c2VyczphdXRoIl0sImV4cCI6MTc0MjQyMDQ5Mn0.yKe4UOlOciOMlNfsEQamSOTe2aTtu66_jVQy38ciM5g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:81/admin/links/del_unauth_links",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"admin",
+						"links",
+						"del_unauth_links"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:81/links/shorten",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3YmI5MzdjMC0zNTRlLTQyNzEtOWJiYy00YmI4YjVjNTM5ZDciLCJhdWQiOlsiZmFzdGFwaS11c2VyczphdXRoIl0sImV4cCI6MTc0MjQwNzE2MH0.eob5NTu7KYOt1DLTk8gOhqIX_pVf_Q3q6Mi-C-HXL40",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"original_url\": \"https://ya.ru\",\n    \"custom_alias\": \"y4\",\n    \"expires_at\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:81/links/shorten",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"links",
+						"shorten"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/links/search",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmODYzYTc0ZC1jZjg3LTQ5OTEtYmQyNi1hOTA4MzdhM2FmNzkiLCJhdWQiOlsiZmFzdGFwaS11c2VyczphdXRoIl0sImV4cCI6MTc0MjQ1NzA2MH0.FrSCoiJeTxWh9D6WH6LTjntg0g7a6PwbjHjQkdn_Pt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:81/links/search?original_url=ya.ru",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"links",
+						"search"
+					],
+					"query": [
+						{
+							"key": "original_url",
+							"value": "ya.ru"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"mc@saharov.net\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:81/auth/register",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth/jwt/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "mc@saharov.net",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "127.0.0.1:81/auth/jwt/login",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"auth",
+						"jwt",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:81/<short> - PUT",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3YmI5MzdjMC0zNTRlLTQyNzEtOWJiYy00YmI4YjVjNTM5ZDciLCJhdWQiOlsiZmFzdGFwaS11c2VyczphdXRoIl0sImV4cCI6MTc0MjQxMTc2NH0.HUEyJ10kcI82bOBdEsSvBjedTPw17Qvv3BaosXmhUM0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"original_url\": \"https://ya.ru\",\n    \"custom_alias\": \"y33\",\n    \"expires_at\": \"2025-05-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:81/links/y3",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"links",
+						"y3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:81/<short>/stats",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3YmI5MzdjMC0zNTRlLTQyNzEtOWJiYy00YmI4YjVjNTM5ZDciLCJhdWQiOlsiZmFzdGFwaS11c2VyczphdXRoIl0sImV4cCI6MTc0MjQxMTc2NH0.HUEyJ10kcI82bOBdEsSvBjedTPw17Qvv3BaosXmhUM0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:81/links/y3/stats",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"links",
+						"y3",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:81/<short>/stats Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"original_url\": \"https://ya.ru\",\n    \"custom_alias\": \"y\",\n    \"expires_at\": \"2025-05-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:81/links/y/stats",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"links",
+						"y",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:81/<short> - DELETE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3YmI5MzdjMC0zNTRlLTQyNzEtOWJiYy00YmI4YjVjNTM5ZDciLCJhdWQiOlsiZmFzdGFwaS11c2VyczphdXRoIl0sImV4cCI6MTc0MjQwNzE2MH0.eob5NTu7KYOt1DLTk8gOhqIX_pVf_Q3q6Mi-C-HXL40",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:81/links/y2",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"links",
+						"y2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:81/links/<short>",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"original_url\": \"https://ya.ru\",\n    \"custom_alias\": \"y\",\n    \"expires_at\": null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:81/links/y",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "81",
+					"path": [
+						"links",
+						"y"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/me - profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3YmI5MzdjMC0zNTRlLTQyNzEtOWJiYy00YmI4YjVjNTM5ZDciLCJhdWQiOlsiZmFzdGFwaS11c2VyczphdXRoIl0sImV4cCI6MTc0MjM5OTcwN30.c0eTlU4ezZD2EM0MoZYwQT0D8-a1Fw4wChVysVrNk4k"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:81/users/me",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "81",
+					"path": [
+						"users",
+						"me"
+					]
+				},
+				"description": "Generated from cURL: curl \\\n-H \"Content-Type: application/json\" \\\n-H \"Authorization: Bearer $TOKEN\" \\\n-X GET \\\nhttp://localhost:8000/users/me"
+			},
+			"response": []
+		}
+	]
+}

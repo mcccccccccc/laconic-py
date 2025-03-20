@@ -97,5 +97,7 @@ Swagger docs: https://ml.saharov.net:81/docs
 
 ### Коллекция Postman с запросами к сервису
 
+[laconic_py.postman_collection.json](laconic_py.postman_collection.json)
+
 
 
