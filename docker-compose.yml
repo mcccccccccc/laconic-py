@@ -1,0 +1,47 @@
+services:
+  app:
+    build: .
+    restart: always
+    ports:
+      - "81:8000"
+    environment:
+      DATABASE_URL: "postgresql+asyncpg://root:pgpass@db:5432/laconic"
+      REDIS_HOST: "redis"
+      REDIS_PORT: 6379
+      SECRET: "SECdsfsRET"
+
+    volumes:
+      - ./app:/app
+    depends_on:
+      - db
+      - redis
+    command: ["uvicorn", "--reload", "app:app", "--host", "0.0.0.0"]
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pgpass
+      POSTGRES_USER: root
+    ports:
+        - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  redis:
+    image: redis:7.4.2-alpine
+    restart: always
+#    ports:
+#      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
+
+volumes:
+  pgdata:
+  cache:
