@@ -1,7 +1,7 @@
 import datetime
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from auth.db import ShortLink, User
+from db import ShortLink, User
 from auth.users import super_user
 from depends import get_db
 from sqlalchemy import select

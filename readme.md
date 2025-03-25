@@ -99,5 +99,24 @@ Swagger docs: http://212.34.143.67:81/docs
 
 [laconic_py.postman_collection.json](laconic_py.postman_collection.json)
 
+## Tests
+
+### Функциональные и пример юнит теста (на метод генерации короткой ссылки):
+
+`docker-compose exec app pytest ../tests/`
+
+### Покрытие кода тестами
+
+`docker-compose exec app pytest --cov=. --cov-report html ../tests/`
+
+С пустым редисом: [htmlcov](app/htmlcov)
+С заполненным редисом: [htmlcov-cached](app/htmlcov-cached)
 
 
+### Locust - проверка нагрузки 
+
+`docker-compose exec app locust -f ../tests/locustfile.py --host http://127.0.0.1:8000`
+
+![SCR-20250325-nplv.png](SCR-20250325-nplv.png)
+
+![SCR-20250325-nvnz.png](SCR-20250325-nvnz.png)

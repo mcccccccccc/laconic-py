@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 import redis.asyncio as redis
 import datetime
@@ -7,10 +7,10 @@ from starlette.responses import RedirectResponse
 from fastapi import Depends, BackgroundTasks, APIRouter
 from sqlalchemy import select
 from auth.users import current_active_user, current_user
-from auth.db import User, ShortLink
+from db import User, ShortLink
 from depends import get_redis, get_db
 from auth.schemas import CreateShortRequest, UpdateLinkRequest
-
+from utils.code_gen import code_gen
 
 router: APIRouter = APIRouter(tags=["links"])
 
@@ -22,7 +22,7 @@ async def shorten_url(
         user: User = Depends(current_user)
 ):
 
-    short_code = request.custom_alias if request.custom_alias else str(uuid.uuid4())[:6]
+    short_code = await code_gen(db, request.custom_alias)
 
     expire_delta = None
     if request.expires_at:
@@ -110,7 +110,6 @@ async def redirect_url(short_code: str, db: Session = Depends(get_db), redis_cli
     if not cached_url:
         if short_link.expires_at:
             expire_delta = short_link.get_ttl()
-            # expire_delta = short_link.expires_at - datetime.datetime.now()
             await redis_client.setex(short_code, expire_delta, short_link.original_url)
         else:
             await redis_client.set(short_code, short_link.original_url)
@@ -165,6 +164,8 @@ async def update_link(
     async with redis_client.pipeline(transaction=True) as pipe:
         ttl = link.get_ttl()
         r = await (pipe.delete(short_code).setex(short_code, ttl, link.original_url))
+    # ttl = link.get_ttl()
+    # await redis_client.setex(short_code, ttl, link.original_url)
 
     return {"detail": "Link updated"}
 
