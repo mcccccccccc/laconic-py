@@ -9,7 +9,7 @@ from routes.admin import router as admin_router
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI): # pragma: no cover
     await create_db_and_tables()
     yield
     pass
