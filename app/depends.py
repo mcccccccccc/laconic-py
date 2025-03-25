@@ -14,7 +14,6 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
 
 
 async def get_db():
-
     async with async_session_maker() as session:
         try:
             yield session
@@ -23,7 +22,7 @@ async def get_db():
 
 
 async def get_redis():
-    redis_client = redis.Redis(host=settings.redis_host, port=settings.redis_port, decode_responses=True)
+    redis_client = redis.Redis(host=settings.redis_host, port=settings.redis_port, db=4, decode_responses=True)
     try:
         yield redis_client
     finally:

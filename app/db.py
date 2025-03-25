@@ -3,7 +3,7 @@ from fastapi import Depends
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import DeclarativeBase
-from depends import engine, get_async_session
+from depends import engine, get_db
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, func, UUID
 
 
@@ -30,7 +30,7 @@ class ShortLink(Base):
         if self.expires_at:
             expire_delta = self.expires_at - datetime.datetime.now()
             if expire_delta.total_seconds() < 0:
-                raise Exception("Expiration date must be in the future")
+                raise Exception("Expiration date must be in the future___")
 
             return expire_delta
         else:
@@ -55,5 +55,5 @@ async def create_db_and_tables():
         await conn.run_sync(Base.metadata.create_all)
 
 
-async def get_user_db(session: AsyncSession = Depends(get_async_session)):
+async def get_user_db(session: AsyncSession = Depends(get_db)):
     yield SQLAlchemyUserDatabase(session, User)

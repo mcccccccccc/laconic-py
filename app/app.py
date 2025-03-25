@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
+from starlette.responses import PlainTextResponse
 from auth.users import auth_backend, fastapi_users
 from auth.schemas import UserCreate, UserRead, UserUpdate
-from auth.db import create_db_and_tables
+from db import create_db_and_tables
 from routes.short_link import router as short_link_router
 from routes.admin import router as admin_router
 
@@ -45,7 +46,7 @@ app.include_router(
 
 @app.get("/health")
 def health():
-    return "ok" # + os.getenv('DATABASE_URL')
+    return PlainTextResponse('ok')
 
 
 
