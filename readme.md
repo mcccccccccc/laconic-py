@@ -107,15 +107,43 @@ Swagger docs: http://212.34.143.67:81/docs
 
 ### Покрытие кода тестами
 
-`docker-compose exec app pytest --cov=. --cov-report html ../tests/`
+Тут пришлось повозиться. Из коробки coveraage не работает с мешанийной из параллельности, асинхронности и тредов которые получаются при аснрхронносм использовании fastapi и sqlalchemestry.
 
-С пустым редисом: [htmlcov](app/htmlcov)
-С заполненным редисом: [htmlcov-cached](app/htmlcov-cached)
 
+Решение зашел в этом обсуждении: https://github.com/nedbat/coveragepy/issues/1082#issue-775287623 
+
+Надо использовать параметр  `--concurrency=gevent`.
+
+Сначата пробовал через плагин pytest-cov, но он не работает с gevent.
+
+`docker-compose exec app pytest --cov=. --concurrency=gevent --cov-report html ../tests/`
+
+Потом попробовал через coverage, в него можно передать `--concurrency=gevent`: 
+
+`docker-compose exec app coverage run --concurrency=gevent --source=. -m pytest ../tests/`
+
+Вывести отчет на экран:
+
+`docker-compose exec app coverage report -m`
+
+Сгенерировать html отчет:
+
+`docker-compose exec app coverage html`
+
+Сгенерированный отчет можно посмотреть в папке `htmlcov` в корне проекта:
+
+[htmlcov/index.html](app/htmlcov/index.html)
+
+![SCR-20250325-qybv.png](SCR-20250325-qybv.png)
+
+
+**Довел покрытие тестами до 91%**
 
 ### Locust - проверка нагрузки 
 
 `docker-compose exec app locust -f ../tests/locustfile.py --host http://127.0.0.1:8000`
+
+Приложил скрины с результатов нагрузочных тесов:
 
 ![SCR-20250325-nplv.png](SCR-20250325-nplv.png)
 

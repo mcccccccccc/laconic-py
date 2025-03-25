@@ -14,13 +14,6 @@ from unittest.mock import AsyncMock
 
 pytestmark = pytest.mark.asyncio
 
-# @pytest.fixture(scope="session")
-# def event_loop(request):
-#     """Create an instance of the default event loop for each test case."""
-#     loop = asyncio.get_event_loop_policy().new_event_loop()
-#     yield loop
-#     loop.close()
-
 # @pytest_asyncio.fixture
 # async def mock_redis():
 #     redis_mock = AsyncMock()
@@ -36,19 +29,6 @@ pytestmark = pytest.mark.asyncio
 # def app_fixture_with_redis(get_redis_override):
 #     app.dependency_overrides[get_redis] = get_redis_override
 #     return app
-
-
-# @pytest.mark.asyncio
-async def test_health():
-    async with AsyncClient(
-            transport=ASGITransport(app=app), base_url="http://test"
-    ) as client:
-        response = await client.get("/health")
-        assert response.status_code == 200
-        assert response.text == "ok"
-
-
-
 
 
 @pytest_asyncio.fixture
@@ -73,20 +53,36 @@ def get_db_override(db_session: AsyncSession) -> Callable:
     return _override_get_db
 
 
-@pytest.fixture()
-def app_fixture(get_db_override: Callable) -> FastAPI:
-    app.dependency_overrides[get_db] = get_db_override
-    # app.dependency_overrides[get_redis] = get_redis_override
-    return app
-
-
 @pytest_asyncio.fixture
 async def async_client(app_fixture: FastAPI) -> AsyncGenerator:
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         yield ac
 
-# @pytest.mark.asyncio
-# @pytest.mark.anyio
+@pytest_asyncio.fixture
+async def mock_redis():
+    original_redis = await anext(get_redis())
+    print(original_redis)
+
+    redis_mock = AsyncMock(wraps=original_redis)
+    redis_mock.get.return_value = None
+    yield redis_mock
+
+@pytest.fixture
+def get_redis_override(mock_redis):
+    async def _override_get_redis():
+        yield mock_redis
+    return _override_get_redis
+
+
+@pytest.fixture()
+def app_fixture(get_db_override: Callable, get_redis_override: Callable) -> FastAPI:
+    app.dependency_overrides[get_db] = get_db_override
+    # app.dependency_overrides[get_redis] = get_redis_override
+    return app
+
+# ----------------- TESTS ---------------------------------------------
+
+
 async def test_login(async_client: AsyncClient, db_session: AsyncSession):
     # Регистрация нового пользователя
     response = await async_client.post(
@@ -106,6 +102,15 @@ async def test_login(async_client: AsyncClient, db_session: AsyncSession):
     assert "access_token" in response.json()
 
 
+async def test_health():
+    async with AsyncClient(
+            transport=ASGITransport(app=app), base_url="http://test"
+    ) as client:
+        response = await client.get("/health")
+        assert response.status_code == 200
+        assert response.text == "ok"
+
+
 async def test_shorten_url(async_client: AsyncClient, db_session: AsyncSession):
     response = await async_client.post(
         "/auth/register",
@@ -122,11 +127,28 @@ async def test_shorten_url(async_client: AsyncClient, db_session: AsyncSession):
 
     response = await async_client.post(
         "/links/shorten",
-        json={"original_url": "http://example.com"},
+        json={"original_url": "http://example.com", "expires_at": "2025-05-20"},
         headers={"Authorization": f"Bearer {token}"}
     )
     assert response.status_code == 200
     assert "short_url" in response.json()
+
+
+
+    short = response.json()["short_url"]
+    short = short.split("/")[-1]
+    # print(short)
+
+
+    redis_client = await anext(get_redis())
+    await redis_client.delete(short)
+
+    response2 = await async_client.get(
+        f"/links/{short}"
+        #headers={"Authorization": f"Bearer {token}"}
+    )
+    assert response2.status_code == 307
+    assert response2.headers["Location"] == "http://example.com/"
 
 async def test_search_link(async_client: AsyncClient, db_session: AsyncSession):
     response = await async_client.post(
